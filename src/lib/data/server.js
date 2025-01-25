@@ -1,9 +1,9 @@
 const backendUrl = () => {
-  return process.env.REACT_APP_BACKEND;
+  return process.env.BACKEND_URL;
 };
 
 const frontUrl = () => {
-  return process.env.REACT_APP_FRONTEND;
+  return process.env.FRONTEND_URL;
 };
 
 module.exports = {
