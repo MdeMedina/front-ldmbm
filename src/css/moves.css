@@ -1,0 +1,313 @@
+.filtros { 
+    margin-top: 12px !important;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.select-max {
+    max-width: 150px;
+}
+.swal2-html-container {
+    overflow: visible !important;
+}
+
+.select-max-pdf {
+    max-width: 150px;
+
+}
+
+.ingreso-label {
+    margin-bottom: 0;
+    font-size: 19px;
+    font-weight: 600;
+    background-color: green;
+    color: #fff;
+    padding: 0px 4px;
+    border-radius: 5px;
+}
+.egreso-label {
+    margin-bottom: 0;
+    font-size: 19px;
+    font-weight: 600;
+    background-color: #B21F00;
+    color: #fff;
+    padding: 0px 4px;
+    border-radius: 5px;
+}
+
+
+.closer { 
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    font-size: 15px !important;
+    justify-content: center;
+}
+
+.concepto-table{
+    max-width: 192.6px;
+    max-height: 55px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.monto-table {
+    text-align: end;
+}
+
+.input-form {
+    max-width: 200px;
+}
+
+.total {
+    font-weight: bold !important;
+}
+
+.d {
+    border-right: 1px solid #ccc;
+}
+.egreso {
+    color: #d82400;
+}
+
+.rw-bit{
+    margin-right: 0 !important;
+}
+
+.toyox {
+    background-color: #004268;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    border: 0px;
+    border-radius: 0.375rem;
+    text-align: center;
+}
+
+.btn-seleccion {
+    background-color: white;
+    border: 1px solid #737372;
+    text-align: center;
+    border-radius: 6px;
+    margin: 0px 7px 5px 0px;
+    font-size: 12px;
+    padding: 3px;
+}
+
+.btn-guardado {
+    background-color: white;
+    border: 1px solid #737372;
+    text-align: center;
+    border-radius: 6px;
+    margin: 5px 7px 5px 0px;
+    font-size: 12px;
+    padding: 3px;
+}
+
+
+.btn-seleccionado {
+    background-color: #737372;
+    border: 1px solid #737372;
+    text-align: center;
+    margin: 0px 7px 5px 0px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 3px;
+}
+
+.toyox-cart {
+    background-color: #004268;
+    color: #fff;
+    padding: 5px;
+    
+    text-decoration: none;
+    border: 0px;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.toyox:hover {
+    background-color: #005687;
+    cursor: pointer;
+}
+
+.pdfView {
+    width: 100%;
+    height: 100%;
+}
+
+.toyox-e {
+    background-color: #24b200;
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+    border: 0px;
+    border-radius: 7px;
+    text-align: center;
+}
+.toyox-e:hover {
+    background-color: #00b244e1;
+    cursor: pointer;
+}
+
+.toyox-disabled {
+    background-color: #214c64;
+    color: #eceaea;
+    padding: 5px;
+    text-decoration: none;
+    border: 0px;
+    border-radius: 7px;
+    text-align: center;
+}
+.toyox-disabled:hover {
+    background-color: #214c64;
+}
+
+.selectpd {
+    width: 90%;
+}
+
+.paltable {
+    overflow: auto;
+}
+@media (max-width: 768px) {
+    .sp {
+        display: flex;
+        justify-content: center;
+    }
+    .toyox {
+        padding: 5px;
+    }
+    .toyox-disabled{
+        padding: 5px;
+    }
+
+
+}
+@media (min-width: 768px) {
+.boton-container {
+    display: flex;
+    justify-content: center;
+}
+
+}
+
+.lt {
+    font-size: 25px !important;
+}
+.ca {
+    margin-left: 10px !important;
+}
+
+
+.div-btn { 
+    margin-top: 12px !important;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.t-mod {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.nota-text {
+    border-radius: 5px;
+    border: 1px solid #c5c3c3;
+    padding: 5px
+}
+
+.nota-text:focus {
+    outline: #0D6EFD !important;
+    border: 2px solid #0D6EFD;
+}
+
+.btn-imp {
+    text-align: center!important;
+    font-size: 13px !important;
+    background: #0D6EFD;
+    color: white;
+    padding: 3px 15px !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center;
+}
+
+
+.botonrealizado {
+    text-align: center;
+    font-size: 13px;
+    background: #64b612;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
+    width: 100%;
+    display: inline-block;
+}
+#table-pdf {
+    display: none;
+}
+.botonpendiente {
+    text-align: center;
+    font-size: 13px;
+    background: #B21F00;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 5px;
+    width: 100%;
+    display: inline-block;
+}
+
+.titulo {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.subtitulo {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.texto {
+    font-size: 13px;
+    font-weight: 200;
+    margin-bottom: 8px;
+}
+
+.sub-texto {
+    font-size: 8px;
+    font-weight: 100;
+    margin-bottom: 8px;
+}
+
+.lbl-cli {
+    font-size: 13px;
+}
+
+
+.cent {
+margin: 0 auto !important
+}
+
+.btn-cliente {
+    font-size: 16px !important;
+    padding: 6px 12px;
+    margin-left: 8px;
+}
+.btn-vCliente {
+    font-size: 12px !important;
+}
+.f-data{
+    font-size: 11px;
+}
+.o-data{
+    font-size: 12px;
+}
+.tab-c { 
+    max-width: auto;
+    overflow: scroll;
+}
+
