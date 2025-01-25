@@ -18,7 +18,8 @@ function Login() {
       headers: new Headers({ "Content-type": "application/json" }),
     });
   };
-
+  console.log(frontUrl())
+  console.log(backendUrl())
   const handleSubmit = async (event) => {
     event.preventDefault();
     let permissions = {};
