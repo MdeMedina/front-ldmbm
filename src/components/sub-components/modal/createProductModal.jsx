@@ -100,7 +100,7 @@ function CreateModal(props) {
     const uploadPreset = 'preset-product';
   
     // Paso 1: Solicitar firma al servidor
-    const signatureResponse = await fetch(`http://localhost:5000/photos/generate-signature`, {
+    const signatureResponse = await fetch(`${backendUrl()}/photos/generate-signature`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
