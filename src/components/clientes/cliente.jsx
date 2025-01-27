@@ -224,7 +224,7 @@ const removeProduct = async (id, pid) => {
 }
 
 const deleteImage = async (publicId) => {
-  const response = await fetch("http://localhost:5000/photos/generate-signature-delete", {
+  const response = await fetch(`${backendUrl()}/photos/generate-signature-delete`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -453,32 +453,32 @@ const eliminarCliente = () => {
       <div className="d-flex justify-content-center">
       <div className="container-fluid row  d-flex justify-content-center">
       <h1 className='mt-3'>Cliente: {cliente.nombre}</h1>
-    <div className="col-12 bg-light t-mod p-4 row ">
+    <div className="col-12 bg-light t-mod p-4 row">
     <div className="col-12 mb-2">Datos del cliente:</div>
     <br />
-    <div className="col-4 ">
+    <div className="col-xs-4 col-sm-4 mb-2 ">
       <h6>Nombre:</h6>
       <div className="f-data">{cliente.nombre}</div>
     </div>
-    <div className="col-4 ">
+    <div className="col-xs-4 col-sm-4 mb-2 ">
       <h6>RUT:</h6> 
       <div className="f-data">{cliente.RUT}</div>
     </div>
-    <div className="col-4 mb-2">
+    <div className="col-xs-8 col-sm-4 mb-2 ">
       <h6>Contacto:</h6> 
       <div className="f-data">{cliente.contacto}</div>
     </div>
-    <div className="col-4 ">
+    <div className="col-xs-8 col-sm-4 mb-2 ">
       <h6>Direccion:</h6> 
       <div className="f-data">{cliente.direccion}</div>
     </div>
-    <div className="col-4">
+    <div className="col-xs-8 col-sm-4 mb-2" >
       <div>
         <h6>Correo Electronico:</h6> 
         <div className="f-data">{cliente.correo}</div>
       </div>
     </div>
-    <div className="col-4 mb-4">
+    <div className="col-xs-8 col-sm-4 mb-4">
         <h6>Visita:</h6> 
         <div className="f-data">{cliente.visita}</div>
     </div>
@@ -497,7 +497,7 @@ const eliminarCliente = () => {
             { productos.length > 0 ?
               productos.map((p, i) => { 
                 return (
-                <div class="card card-product m-1 overflow-auto col-3" key={i}>
+                <div class="card card-product m-1 overflow-auto col-xs-12 col-sm-3" key={i}>
                 <img
                   src={`${urlPhotos}${p.photo_pid}.png?v=${new Date().getTime()}`}
                   class="card-img-top "

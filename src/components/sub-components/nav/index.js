@@ -206,7 +206,7 @@ function Navg({  }) {
               </>
             ) : (
               <>
-                <Col xs={3} md={3} className="d-flex align-items-center">
+                <Col xs={4} md={4} className="d-flex align-items-center">
                   <div onClick={toggleFunc}>
                     <Button className="btn-nav" >
                       <box-icon name="menu" color="white" id="hola"></box-icon>
@@ -214,8 +214,8 @@ function Navg({  }) {
                   </div>
                 </Col>
                 <Col
-                  xs={3}
-                  md={3}
+                  xs={4}
+                  md={4}
                   className="d-flex align-items-center justify-content-end"
                 >
                   <Navbar.Brand

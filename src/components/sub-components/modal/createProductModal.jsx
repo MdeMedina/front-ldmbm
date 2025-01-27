@@ -287,7 +287,7 @@ function CreateModal(props) {
         </div>
         <canvas
           ref={canvasRef}
-          width="672"
+          width="378"
           height="504"
           style={{ border: '1px solid black', marginBottom: '10px' }}
         />

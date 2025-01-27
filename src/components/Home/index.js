@@ -38,7 +38,7 @@ function Home() {
         {!vm ? (
           false
         ) : (
-          <div className="col-6 row d-flex justify-content-center mb-3">
+          <div className="col-xs-12 col-md-6 row d-flex justify-content-center mb-3">
             <div class="card cd col-10 cl">
               <img
                 src={require("../img/users.jpg")}
@@ -59,7 +59,7 @@ function Home() {
             </div>
           </div>
         )}
-        <div className="col-6 mb-3 row d-flex justify-content-center">
+        <div className="col-xs-12 col-md-6 mb-3 row d-flex justify-content-center">
           {!cu ? (
             false
           ) : (
@@ -76,7 +76,7 @@ function Home() {
                 <p class="card-text d-flex justify-content-center">
                   Haz nuevos presupuestos para tus clientes
                 </p>
-                <Link to="/user" className="d-flex justify-content-center">
+                <Link to="/presupuestos" className="d-flex justify-content-center">
                   <btn class="toyox">Entrar</btn>
                 </Link>
               </div>

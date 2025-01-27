@@ -211,8 +211,8 @@ const settingActProduct = (nombre, notas, precio, _id) => {
         <Accordion.Item eventKey={i}>
           <Accordion.Header>{c.name}</Accordion.Header>
           <Accordion.Body className="row">
-        <div className="col-6 mb-3" ><h6>Nombre:</h6> <div className="text">{c.name}</div></div><div className="col-6"><h6>Precio sin iva:</h6> ${c.price}</div><br />
-        <div className="col-12"><h6>Descripcion:</h6><div className="text">{c.note}</div></div>
+        <div className="col-xs-12 col-sm-6 mb-3" ><h6>Nombre:</h6> <div className="text">{c.name}</div></div><div className="col-xs-12 col-sm-6 mb-3"><h6>Precio sin iva:</h6> ${c.price}</div><br />
+        <div className="col-12 mb-2"><h6>Descripcion:</h6><div className="text">{c.note}</div></div>
         <div className="col-12 d-flex justify-content-end">                    <btn class="btn btn-danger" onClick={() => {
                       eliminarProducto(c._id)
                     }}><box-icon name='trash' color='#ffffff' ></box-icon></btn>
