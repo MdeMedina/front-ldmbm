@@ -358,7 +358,7 @@ useEffect(() => {
       })
       let data = await response.json()
       console.log(data)
-      let datos = data.map((d) => {
+      let datos = data.clientes.map((d) => {
         return {value: d._id, label: d.nombre}
       })
      setClientes(datos)
