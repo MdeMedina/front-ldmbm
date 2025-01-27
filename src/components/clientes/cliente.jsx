@@ -224,7 +224,7 @@ const removeProduct = async (id, pid) => {
 }
 
 const deleteImage = async (publicId) => {
-  const response = await fetch("http://localhost:5000/photos/generate-signature-delete", {
+  const response = await fetch(`${backendUrl()}/photos/generate-signature-delete`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
