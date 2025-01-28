@@ -169,7 +169,7 @@ useEffect(() => {
   const newCot = {
     cliente_id: cliente._id,
     nom_cliente: cliente.nombre,
-    productos: shoppingCart,
+    productos: preShoppingCart,
     total,
     totalIva,
     iva,
@@ -182,13 +182,26 @@ useEffect(() => {
   };
 
   setCot((prevCot) => {
-    // Solo actualiza si hay diferencias entre el estado actual y el nuevo
-    if (!deepCompare(prevCot, newCot)) {
-      return newCot;
+    // Crea una copia del objeto newCot para evitar modificar el original
+    const filteredCot = {
+      ...newCot,
+      productos: newCot.productos?.map((producto) =>
+        Object.fromEntries(
+          Object.entries(producto).filter(([_, value]) => value !== undefined)
+        )
+      ),
+    };
+  
+    // Verifica si hay diferencias entre el estado actual y el nuevo objeto filtrado
+    if (!deepCompare(prevCot, filteredCot)) {
+      console.log(filteredCot);
+      return filteredCot;
     }
-    return prevCot; // Mantén el estado actual si no hay cambios
+  
+    // Mantén el estado actual si no hay cambios
+    return prevCot;
   });
-}, [Corr, cliente, iva, nota, shoppingCart, total, totalIva, vendedor]);
+}, [Corr, cliente, iva, nota, preShoppingCart, total, totalIva, vendedor]);
 
 
 useEffect(() => {
@@ -1472,7 +1485,8 @@ const MySwal = withReactContent(Swal)
     {!shoppingCart[0] ?  <div className="col-6 d-flex justify-content-center align-items-center">
       <div className="toyox-disabled">Enviar</div>
     </div> :     <div className="col-6 d-flex justify-content-center align-items-center" onClick={() => {
-        console.log("Corr en enviar:", Corr)
+        console.log("cot:", cot)
+        console.log("cotiActual:", cotiActual)
       if (!pdfName || !deepCompare(cot, cotiActual)) {
 
         hora = horaActual()
