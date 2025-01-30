@@ -547,7 +547,7 @@ useEffect(() => {
 
 
 
-    const generarPDF = async (cliente) => {
+    const generarPDF = async (cliente, correos, tipo) => {
       const blob = await pdf(<MyDocument 
         cliente={cliente} 
         productos={shoppingCart} 
@@ -561,49 +561,58 @@ useEffect(() => {
          hora={horaActual()} 
          />).toBlob();
             // Crear un objeto FormData y agregar el Blob bajo la clave "myFile"
-            const formData = new FormData();
-            formData.append('myFile', blob, 'cotizacion.pdf');
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = async () => {
+              const base64pdf = reader.result.split(',')[1]; // Extraer la parte base64 del resultado
+              const formData = {
+                name: "cotizacion.pdf", 
+                pdf: base64pdf, // Aquí va el PDF en base64
+                correos,
+                nota,
+                Corr: !deepCompare(cot, cotiActual) ? Corr : Corr-1, 
+                nCliente: cliente.nombre
+              };
+              console.log(formData);
+          
               // Enviar el objeto FormData al servidor
-      try {
-        await fetch(`${backendUrl()}/upload/`, {
-          method: 'POST',
-          body: formData,
-        }).then(async (response) => {
-          if (response.ok){
-          let data  = await response.json()
-          data = data.data
-          setPdfName(data)
-          if (!deepCompare(cot, cotiActual)) { 
-          addCotizacion(cliente, preShoppingCart, total, totalIva, iva, getFormattedDate(), vendedor, nota, Corr, `Pedido n°${Corr} - ${getFormattedDate()}.pdf`)
-          }
-          }
-        });
-        // Manejar la respuesta de la solicitud, si es necesario
-      } catch (error) {
-        // Manejar errores, si los hay
-      }
+              try {
+                await fetch(`${backendUrl()}/upload/`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(formData),
+                }).then(async (response) => {
+                  if (response.ok) {
+                    let data = await response.json();
+                    Swal.fire(
+                      {
+                        icon: 'info',
+                        title: 'Los correos han sido enviados',
+                        html: `${data.mails.map((mail) => {
+                          let check;
+                          if (mail.status) check = `<box-icon name='check-circle' color='#00aa10' ></box-icon>`
+                          else check = `<box-icon name='x-circle' color='#de0000' ></box-icon>`
+                          return `<p>${check}${mail.correo}</p>`;
+                        })}`,
+                        showConfirmButton: false,
+                        timer: 4500
+                      }
+                      )
+                    if (tipo == "up") {
+                      addCotizacion(cliente, preShoppingCart, total, totalIva, iva, getFormattedDate(), vendedor, nota, Corr, `Pedido n°${Corr} - ${getFormattedDate()}.pdf`);
+                    }
+                  }
+                });
+              } catch (error) {
+                // Manejar errores, si los hay
+                console.error(error);
+              }
+            };
     }
     
 
-    useEffect(() => {
-      if (pdfName){
-        generadorEmail(!deepCompare(cot, cotiActual) ? Corr : Corr-1 )
-    }
-    }, [pdfName]);
-
-    const generadorEmail = (numero) => {
-      Swal.fire({
-        icon: 'info',
-        title: 'El pedido se esta generando', 
-        timer: 3000, 
-        timerProgressBar: true,
-        showConfirmButton: false
-      }).then(() => {
-        
-        selectEmail(numero)
-      })
-    }
-    
 
 
     
@@ -627,7 +636,7 @@ useEffect(() => {
     
     async function handleSendMail  (numero, email, msn) {
       const mailOptions = {
-        filename: pdfName,
+        filename: "cotizacion.pdf",
         email: email,
         nota: msn, 
         corr: numero,
@@ -1265,7 +1274,7 @@ useEffect(() => {
 
 const MySwal = withReactContent(Swal)
 
-    const selectEmail = (numero) => {
+    const selectEmail = (numero, tipo) => {
       let att = [];
       console.log(cliente)
       const handleAttachments = (newAttachments) => {
@@ -1292,15 +1301,8 @@ const MySwal = withReactContent(Swal)
               att.push(cliente.correo)
               att.push("mimedina661@gmail.com")
               setCantidadCor(att.length)
-              await att.map(async correo => {
-                console.log(att)
-                let json = {correo, stat: await handleSendMail(numero, correo, msn)}
-                setSended(prevList => [...prevList, json])
-                if (correo != "pedidostoyoxpress@gmail.com" && correo != "toyoxpressca@gmail.com") {
-                  setMostrarSended(prevList => [...prevList, json])
-                }
-              })
-          }
+              await generarPDF(cliente, att, tipo)
+              }
         });
       }
     
@@ -1477,7 +1479,7 @@ const MySwal = withReactContent(Swal)
           console.log("Diferencias encontradas:");
           addCotizacion(cliente, preShoppingCart, total, totalIva, iva, getFormattedDate(), vendedor, nota, Corr, `Pedido n°${Corr} - ${getFormattedDate()}.pdf`)
         }
-        }} fileName={deepCompare({cliente_id: cliente._id, nom_cliente: cliente.nombre, productos: shoppingCart, total, totalIva, iva, fecha: getFormattedDate(), vendedor_id: vendedor.email, nom_vendedor: vendedor.nombre, observaciones: nota, corr: Corr-1, filename: `Pedido n°${Corr-1} - ${getFormattedDate()}.pdf`}, cotiActual) ? `Pedido n°${Corr-1} - ${getFormattedDate()}.pdf` : `Pedido n°${Corr} - ${getFormattedDate()}.pdf` }>
+        }} fileName={deepCompare(cot, cotiActual) ? `Pedido n°${Corr-1} - ${getFormattedDate()}.pdf` : `Pedido n°${Corr} - ${getFormattedDate()}.pdf` }>
         <div className="toyox" >Descargar</div>
         </PDFDownloadLink>
         </div>
@@ -1485,14 +1487,10 @@ const MySwal = withReactContent(Swal)
     {!shoppingCart[0] ?  <div className="col-6 d-flex justify-content-center align-items-center">
       <div className="toyox-disabled">Enviar</div>
     </div> :     <div className="col-6 d-flex justify-content-center align-items-center" onClick={() => {
-        console.log("cot:", cot)
-        console.log("cotiActual:", cotiActual)
-      if (!pdfName || !deepCompare(cot, cotiActual)) {
-
-        hora = horaActual()
-        generarPDF(cliente)
+      if (!deepCompare(cot, cotiActual)) {
+        selectEmail(Corr, "up")
       } else {
-        generadorEmail(Corr-1)
+        selectEmail(Corr-1, "send")
       }
     }}>
       <div className="toyox">Enviar</div>
