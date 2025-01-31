@@ -33,9 +33,6 @@ const {presuId} = useParams();
   }, []);
 
 
-  let hora
-  let vc = JSON.parse(localStorage.getItem("permissions")).verClientes;
-  let cv = JSON.parse(localStorage.getItem("cVend"))
   let vendedor = {nombre: localStorage.getItem("name"), email: localStorage.getItem("email")}
 
     const [cargaClientes, setCargaClientes] = useState()
@@ -1466,8 +1463,6 @@ const MySwal = withReactContent(Swal)
           updateStock(i, 'desc')
         })
       }
-      hora = horaActual()
-
     }}>
       <PDFDownloadLink document={<MyDocument cliente={cliente} productos={shoppingCart} total={formatMonto(total)} totalIva={formatMonto(totalIva)} iva={formatMonto(iva)} fecha={getFormattedDate()} vendedor={vendedor} observaciones={nota} corr={deepCompare(cot, cotiActual) ? Corr-1 : Corr} hora={horaActual()} />} onClick={() => {
           console.log("cot", cot)

@@ -12,10 +12,7 @@ function Home() {
     window.location.href = `${frontUrl()}/login`;
   }
 
-  const permissions = JSON.parse(localStorage.getItem("permissions"));
-  const hi = permissions.horasIngreso;
-  const cu = permissions.crearUsuarios;
-  const vm = permissions.verMovimientos;
+
   useEffect(() => {
     const sidebar = document.getElementById("sidebar");
     const navDiv = document.querySelector(".navDiv");
@@ -35,9 +32,6 @@ function Home() {
         <div className="col-11">
           <h2>Bienvenido</h2>
         </div>
-        {!vm ? (
-          false
-        ) : (
           <div className="col-xs-12 col-md-6 row d-flex justify-content-center mb-3">
             <div class="card cd col-10 cl">
               <img
@@ -58,11 +52,9 @@ function Home() {
               </div>
             </div>
           </div>
-        )}
+   
         <div className="col-xs-12 col-md-6 mb-3 row d-flex justify-content-center">
-          {!cu ? (
-            false
-          ) : (
+
             <div class="card cd col-10 cl">
               <img
                 src={require("../img/moves.jpg")}
@@ -81,7 +73,6 @@ function Home() {
                 </Link>
               </div>
             </div>
-          )}
         </div>
       </div>
     </>

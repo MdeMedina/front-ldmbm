@@ -22,7 +22,6 @@ function Login() {
   console.log(backendUrl())
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let permissions = {};
     user = document.getElementById("user").value;
     pass = document.getElementById("pass").value;
     loginData = {
@@ -42,15 +41,11 @@ function Login() {
         title: loginJson.errormessage,
       });
     } else if (loginStatus === 200) {
-      permissions = loginJson.permissions;
       actInactive(loginJson.email);
       localStorage.setItem("key", loginJson.key);
-      localStorage.setItem("HourAlert", !permissions.obviarIngreso);
       localStorage.setItem("name", loginJson.name);
       localStorage.setItem("email", loginJson.email);
-      localStorage.setItem("cVend", loginJson.vendedor);
       localStorage.setItem("cantidadM", loginJson.cantidadM);
-      localStorage.setItem("permissions", JSON.stringify(permissions));
       localStorage.setItem("messageID", loginJson.messageId);
       localStorage.setItem("nav", true);
       localStorage.setItem("visto", false);

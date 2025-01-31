@@ -11,7 +11,6 @@ import {useNavigate} from 'react-router-dom'
 import { gettingAccounts } from '../../lib/data/SelectOptions';
 
 export const AccountConfig = ({}) => {
-const ca = JSON.parse(localStorage.getItem('permissions')).configurarCuentas
 const key = localStorage.getItem('key')
 if (!key) {
   window.location.href=`${frontUrl()}/login`;
@@ -28,15 +27,12 @@ const [meEncuentro, setMeEncuentro] = useState(1)
 const [deletingAccount, setDeletingAccount] = useState()
 const [vPage, setVPage] = useState(10)
 useEffect(() => {
-  if (!ca) {
-    navigate('/')
-  }
 
   if (!key) {
     navigate("/login")
   }
 
-}, [ca, key, navigate])
+}, [ key, navigate])
 
 
 useEffect(() => {

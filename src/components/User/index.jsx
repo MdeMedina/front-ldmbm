@@ -7,13 +7,8 @@ import Select from 'react-select'
 import 'boxicons'
 import Swal from 'sweetalert2'
 function User({}) {
-  const modUsuarios = JSON.parse(localStorage.getItem('permissions')).modificarUsuarios
-  const delUsuarios = JSON.parse(localStorage.getItem('permissions')).eliminarUsuarios
-    const key = localStorage.getItem("key");
-    if (!key) {
-      window.location.href=`${frontUrl()}/login`;
-    }
-    
+
+
     useEffect(() => {
       const sidebar = document.getElementById("sidebar");
       const navDiv = document.querySelector(".navDiv");
@@ -32,26 +27,12 @@ function User({}) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [_id, set_id] = useState('')
-  const [verMoves, setVerMoves] = useState(false)
-  const [verMovesOt, setVerMovesOt] = useState(false)
-  const [aproveMoves, setAproveMoves] = useState(false)
-  const [delMoves, setDelMoves] = useState(false)
-  const [cUsers, setCUsers] = useState(false)
-  const [vExcel, setVExcel] = useState(false)
-  const [modUsers, setModUsers] = useState(false)
-  const [modFechas, setModFechas] = useState(false)
-  const [delUsers, setDelUsers] = useState(false)
   const [deletingUser, setDeletingUser] = useState()
-  const [consultaPrecios, setConsultaPrecios] = useState()
   const [currentPage, setCurrentPage] = useState(0)
 const [vPage, setVPage] = useState(10)
 const [meEncuentro, setMeEncuentro] = useState(1)
 const [estaba, setEstaba] = useState(1)
-  const [sHours, setSHours] = useState(false)
-  const [oHours, setOHours] = useState(false)
-  const [eMoves, setEMoves] = useState(false)
-  const [cAccounts, setCAccounts] = useState(false)
-  const [vendP, setVendP] = useState(true)
+
   const [vendedor, setVendedor] = useState(0);
   
 
@@ -83,9 +64,9 @@ const handleVPage = (e) => {
   }, [])
 
   const editUsers = (u, i) => { 
-    if (modUsuarios) {
+
         return(<button className='btn btn-primary' data-bs-toggle="modal" data-bs-target={`#actModal-${i}`}><box-icon name='edit-alt' color='#ffffff' ></box-icon></button>)
-    }
+
   }
 
   const removeUser = async () => {
@@ -100,7 +81,6 @@ const handleVPage = (e) => {
   }
 
   const deleteUsers = (u) => {
-    if (delUsuarios) {
         return(<button className='btn btn-danger' value={u._id} onClick={(e) => {
       Swal.fire({
         title: 'Estas seguro que deseas eliminar a este usuario?',
@@ -125,53 +105,7 @@ const handleVPage = (e) => {
       })
 
         }}><box-icon name='trash' type='solid' color='#ffffff' ></box-icon></button>)
-    }
   }
-
-  const handlerDisable = () => {
-    const vm = document.getElementById('movesVista').checked
-    const vmo = document.getElementById('movesVistaOt')
-    const cu = document.getElementById('createU').checked
-    const vp = document.getElementById('vendP').checked
-    const iv = document.getElementById('InputVendedor')
-    const am = document.getElementById('aproveMoves')
-    const mf = document.getElementById('modFechas')
-    const em = document.getElementById('eMoves')
-    const dm = document.getElementById('delMoves')
-    const mu = document.getElementById('modU')
-    const du = document.getElementById('deleteU')
-    if (!vm) {
-        vmo.setAttribute("disabled", "")
-        am.setAttribute("disabled", "")
-        dm.setAttribute("disabled", "")
-        mf.setAttribute("disabled", "")
-        em.setAttribute("disabled", "")
-    }else if (vm) {
-      vmo.setAttribute("disabled", "")
-        am.removeAttribute("disabled")
-        dm.removeAttribute("disabled")
-        mf.removeAttribute("disabled")
-        em.removeAttribute("disabled")
-    }
-
-    
-    if (vp) {
-
-      iv.setAttribute("disabled", "")
-  }else if (!vp) {
-      iv.removeAttribute("disabled")
-  }
-
-    if (!cu) {
-
-        mu.setAttribute("disabled", "")
-        du.setAttribute("disabled", "")
-    }else if (cu) {
-        mu.removeAttribute("disabled")
-        du.removeAttribute("disabled")
-    }
-  }
-
   const createUser = () => {
     const cPass = document.getElementById('InputPassword2').value
     if (email === ''){
@@ -186,23 +120,6 @@ const handleVPage = (e) => {
         const registerData = {
             email: email,
             username: username,
-            permissions: {
-                consultarPrecios: consultaPrecios,
-                verMovimientos: verMoves,
-                verOtrosMovimientos: verMovesOt,
-                aprobarMovimientos: aproveMoves,
-                editarMovimientos: eMoves,
-                eliminarMovimientos: delMoves,
-                crearUsuarios: cUsers,
-                modificarUsuarios: modUsers,
-                eliminarUsuarios: delUsers,
-                modificarFechas: modFechas,
-                horasIngreso: sHours,
-                obviarIngreso: oHours, 
-                configurarCuentas: cAccounts,
-                verExcel: vExcel,
-                verClientes: vendP
-            },
             password: password,
             vendedor: vendedor
         }
@@ -222,43 +139,10 @@ const handleVPage = (e) => {
   const actUser = async (u ,i) => {
     const email = document.getElementById(`actInputEmail-${i}`).value
     const username = document.getElementById(`actUsernameInput-${i}`).value
-    const vendedor = document.getElementById(`actVendedorInput-${i}`).value
-    console.log(vendedor)
-    const consultarPrecios = document.getElementById(`actConsultarPrecios-${i}`).checked;
-    const movesVista = document.getElementById(`actMovesVista-${i}`).checked
-    const movesVistaOt = document.getElementById(`actMovesVistaOt-${i}`).checked
-    const aproveMoves = document.getElementById(`actAproveMoves-${i}`).checked
-    const modFechas = document.getElementById(`actModFechas-${i}`).checked
-    const delMoves = document.getElementById(`actDelMoves-${i}`).checked
-    const createU = document.getElementById(`actCreateU-${i}`).checked
-    const eMoves = document.getElementById(`actEMoves-${i}`).checked
-    const modU = document.getElementById(`actModU-${i}`).checked
-    const delU = document.getElementById(`actDeleteU-${i}`).checked
-    const modTime = document.getElementById(`actModTime-${i}`).checked
-    const obTime = document.getElementById(`actObTime-${i}`).checked
-    const cAccounts = document.getElementById(`actCAccounts-${i}`).checked
-    const verExcel = document.getElementById(`actVerExcel-${i}`).checked
-    const verC = document.getElementById(`actVendP-${i}`).checked
- const permissions = 
-    {
-      consultarPrecios: consultarPrecios,
-      verMovimientos: movesVista,
-      verOtrosMovimientos: movesVistaOt,
-      aprobarMovimientos: aproveMoves,
-      eliminarMovimientos: delMoves,
-      crearUsuarios: createU,
-      modificarFechas: modFechas,
-      modificarUsuarios: modU,
-      eliminarUsuarios: delU,
-      horasIngreso: modTime,
-      obviarIngreso: obTime,     
-      editarMovimientos: eMoves,
-      configurarCuentas: cAccounts,
-      verExcel: verExcel, 
-      verClientes: verC
-    }
 
-    const actData = {_id: _id,email: email, username: username, permissions: permissions, vendedor: vendedor }
+
+
+    const actData = {_id: _id,email: email, username: username}
     
     await fetch(`${backendUrl()}/users/updateUser`, {
       method: 'PUT',
@@ -353,161 +237,6 @@ return (
     <label for="InputPassword2" class="form-label">Confirmar contraseña</label>
     <input type="password" class="form-control" id="InputPassword2" />
   </div>
-  <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="vendP" defaultChecked onChange={() => {
-            const value = document.getElementById('vendP').checked
-            setVendP(value)
-            handlerDisable()
-  }}/>
-  <label class="form-check-label" for="vendP">
-   Ver todos los clientes
-  </label>
-</div>
-  <div class="mb-3">
-    <label for="InputVendedor" class="form-label">Código de Vendedor</label>
-    <input type="number" class="form-control" disabled id="InputVendedor" onChange={() => {
-      const value = parseInt(document.getElementById('InputVendedor').value, 0);
-      setVendedor(value)
-    }}/>
-  </div>
-  <hr />
-    <h3>Permisos</h3>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" checked id="consulaPrecios" onChange={() => {
-            const value = document.getElementById('consultaPrecios').checked
-            setConsultaPrecios(value)
-  }} />
-  <label class="form-check-label" for="consultaPrecios">
-  Consultar listado de precios
-  </label>
-</div>
-    <h5>- Movimientos</h5>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="movesVista" onChange={() => {
-            const value = document.getElementById('movesVista').checked
-            setVerMoves(value)
-            handlerDisable()
-  }} />
-  <label class="form-check-label" for="movesVista">
-    Ver la pestaña movimientos
-  </label>
-</div>
-    <div class="form-check">
-  <input class="form-check-input disabled" type="checkbox" value="" id="movesVistaOt" onChange={() => {
-            const value = document.getElementById('movesVistaOt').checked
-            setVerMovesOt(value)
-  }} />
-  <label class="form-check-label" for="movesVistaOt">
-    Ver los movimientos de otros usuarios
-  </label>
-</div>
-<div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id="aproveMoves" disabled onChange={() => {
-            const value = document.getElementById('aproveMoves').checked
-            setAproveMoves(value)
-  }}/>
-  
-  <label class="form-check-label" for="aproveMoves">
-    Aprobar movimientos de otros usuarios
-  </label>
-  </div>
-  <div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id="eMoves" disabled onChange={(e) => {
-            const value = e.target.checked
-            setEMoves(value)
-  }}/>
-  
-  <label class="form-check-label" for="eMoves">
-  Modificar Movimientos
-  </label>
-</div>
-<div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id="modFechas" disabled onChange={(e) => {
-            const value = e.target.checked
-            setModFechas(value)
-  }}/>
-  
-  <label class="form-check-label" for="modFechas">
-  Modificar fechas de Movimientos
-  </label>
-</div>
-<br />
-  <div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id="delMoves" disabled onChange={(e) => {
-            const value = e.target.checked
-            setDelMoves(value)
-  }}/>
-  
-  <label class="form-check-label" for="delMoves">
-    Eliminar movimientos
-  </label>
-</div>
-<br />
-    <h5>- Usuarios</h5>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="createU" onChange={() => {
-            const value = document.getElementById('createU').checked
-            setCUsers(value)
-            handlerDisable()
-  }}/>
-  <label class="form-check-label" for="createU">
-   Crear usuarios
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="modU" disabled onChange={() => {
-            const value = document.getElementById('modU').checked
-            setModUsers(value)
-  }}/>
-  <label class="form-check-label" for="modU">
-    Modificar usuarios
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="deleteU" disabled onChange={() => {
-            const value = document.getElementById('deleteU').checked
-            setDelUsers(value)
-  }} />
-  <label class="form-check-label" for="deleteU">
-    Eliminar usuarios
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="modTime" onChange={() => {
-            const value = document.getElementById('modTime').checked
-            setSHours(value)
-  }}/>
-  <label class="form-check-label" for="modTime">
-    Modificar los horarios de ingreso y/o salida
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="obTime" onChange={() => {
-            const value = document.getElementById('obTime').checked
-            setOHours(value)
-  }}/>
-  <label class="form-check-label" for="modTime">
-    Modificar los horarios de ingreso y/o salida
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="cAccounts"onChange={(e) => {
-            const value = e.target.checked
-            setCAccounts(value)
-  }}/>
-  <label class="form-check-label" for="cAccounts">
-    Configurar y Modificar cuentas
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="vExcel"onChange={(e) => {
-            const value = e.target.checked
-            setVExcel(value)
-  }}/>
-  <label class="form-check-label" for="cAccounts">
-  Carga mediante Excel
-  </label>
-</div>
 </form>
       </div>
       <div class="modal-footer">
@@ -559,152 +288,6 @@ return (
     <label for={`actUsernameInput-${i}`} class="form-label">Nombre de usuario</label>
     <input type="email" class="form-control" id={`actUsernameInput-${i}`} aria-describedby="emailHelp" defaultValue={u.username}/>
   </div>
-  <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actVendP-${i}`} defaultChecked={u.permissions.verClientes}  onChange={() => {
-            const value = document.getElementById(`actVendP-${i}`).checked
-            setVendP(value)
-  }} />
-  <label class="form-check-label" for={`actVendP-${i}`}>
-  Ver todos los clientes
-  </label>
-</div>
-  <div class="mb-3">
-    <label for={`actVendedorInput-${i}`} class="form-label">Código de Vendedor</label>
-    <input type="number" class="form-control" id={`actVendedorInput-${i}`} aria-describedby="emailHelp" defaultValue={u.vendedor}/>
-  </div>
-  <hr />
-    <h3>Permisos</h3>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actConsultarPrecios-${i}`} defaultChecked={u.permissions.consultarPrecios}  onChange={() => {
-            const value = document.getElementById(`actConsultarPrecios-${i}`).checked
-            setConsultaPrecios(value)
-  }} />
-  <label class="form-check-label" for={`actConsultarPrecios-${i}`}>
-  Consultar listado de precios
-  </label>
-</div>
-    <h5>- Movimientos</h5>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actMovesVista-${i}`} defaultChecked={u.permissions.verMovimientos}  onChange={() => {
-            const value = document.getElementById(`actMovesVista-${i}`).checked
-            setVerMoves(value)
-            handlerDisable()
-  }} />
-  <label class="form-check-label" for={`actMovesVista-${i}`}>
-    Ver la pestaña movimientos
-  </label>
-</div>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actMovesVistaOt-${i}`} defaultChecked={u.permissions.verMovimientos}  onChange={() => {
-            const value = document.getElementById(`actMovesVistaOt-${i}`).checked
-            setVerMovesOt(value)
-  }} />
-  <label class="form-check-label" for={`actMovesVista-${i}`}>
-    Ver los movimientos de otros usuarios
-  </label>
-</div>
-<div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id={`actAproveMoves-${i}`}  defaultChecked={u.permissions.aprobarMovimientos} onChange={() => {
-            const value = document.getElementById(`actAproveMoves-${i}`).checked
-            setAproveMoves(value)
-  }}/>
-  <label class="form-check-label" for={`actAproveMoves-${i}`}>
-    Aprobar movimientos de otros usuarios
-  </label>
-</div>
-<div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id={`actEMoves-${i}`}  defaultChecked={u.permissions.editarMovimientos} onChange={(e) => {
-            const value = e.target.checked
-            setEMoves(value)
-  }}/>
-  <label class="form-check-label" for={`actEMoves-${i}`}>
-Editar Movimientos
-  </label>
-</div>
-<div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id={`actModFechas-${i}`}  defaultChecked={u.permissions.modificarFechas} onChange={(e) => {
-            const value = e.target.checked
-            setModFechas(value)
-  }}/>
-  <label class="form-check-label" for={`actModFechas-${i}`}>
-Modificar fecha de Movimientos
-  </label>
-</div>
-<div class="form-check ">
-  <input class="form-check-input disabled" type="checkbox" value="" id={`actDelMoves-${i}`}  defaultChecked={u.permissions.eliminarMovimientos} onChange={(e) => {
-            const value = e.target.checked
-            setDelMoves(value)
-  }}/>
-  <label class="form-check-label" for={`actDelMoves-${i}`}>
-    Eliminar movimientos
-  </label>
-</div>
-<br />
-    <h5>- Usuarios</h5>
-    <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actCreateU-${i}`}  defaultChecked={u.permissions.crearUsuarios} onChange={() => {
-            const value = document.getElementById(`actCreateU-${i}`).checked
-            setCUsers(value)
-            handlerDisable()
-  }}/>
-  <label class="form-check-label" for={`actCreateU-${i}`} >
-   Crear usuarios
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actModU-${i}`}   defaultChecked={u.permissions.modificarUsuarios} onChange={() => {
-            const value = document.getElementById(`actModU-${i}`).checked
-            setModUsers(value)
-  }}/>
-  <label class="form-check-label" for={`actModU-${i}`}>
-    Modificar usuarios
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actDeleteU-${i}`}  defaultChecked={u.permissions.eliminarUsuarios} onChange={() => {
-            const value = document.getElementById(`actDeleteU-${i}`).checked
-            setDelUsers(value)
-  }} />
-  <label class="form-check-label" for={`actDeleteU-${i}`}>
-    Eliminar usuarios
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actModTime-${i}`} defaultChecked={u.permissions.horasIngreso} onChange={() => {
-            const value = document.getElementById(`actModTime-${i}`).checked
-            setSHours(value)
-  }}/>
-  <label class="form-check-label" for={`actModTime-${i}`}>
-    Modificar los horarios de ingreso y/o salida
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actObTime-${i}`} defaultChecked={u.permissions.obviarIngreso} onChange={() => {
-            const value = document.getElementById(`actObTime-${i}`).checked
-            setOHours(value)
-  }}/>
-  <label class="form-check-label" for={`actObTime-${i}`}>
-  Obviar horarios de ingreso y salida
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actCAccounts-${i}`} defaultChecked={u.permissions.configurarCuentas} onChange={() => {
-            const value = document.getElementById(`actCAccounts-${i}`).checked
-            setCAccounts(value)
-  }}/>
-  <label class="form-check-label" for={`actCAccounts-${i}`}>
-  Configurar y Modificar cuentas
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id={`actVerExcel-${i}`} defaultChecked={u.permissions.verExcel} onChange={() => {
-            const value = document.getElementById(`actVerExcel-${i}`).checked
-            setVExcel(value)
-  }}/>
-  <label class="form-check-label" for={`actVerExcel-${i}`}>
-  Carga mediante excel
-  </label>
-</div>
 </form>
       </div>
       <div class="modal-footer">

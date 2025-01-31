@@ -18,25 +18,6 @@ import { Cliente } from "./components/clientes/cliente";
 import Products from "./components/Products";
 import Cotizaciones from "./components/cotizaciones";
 function App() {
-  let permissions = JSON.parse(localStorage.getItem("permissions"));
-  let vm;
-  let am;
-  let dm;
-  let mu;
-  let du;
-  if (permissions === null) {
-    vm = false;
-    am = false;
-    dm = false;
-    mu = false;
-    du = false;
-  } else {
-    vm = permissions.verMovimientos;
-    am = permissions.aprobarMovimientos;
-    dm = permissions.eliminarMovimientos;
-    mu = permissions.modificarUsuarios;
-    du = permissions.eliminarUsuarios;
-  }
 
   return (
     <Router>
@@ -55,9 +36,6 @@ function App() {
             path="/clientes"
             element={
               <Clientes
-                verMovimientos={vm}
-                aprobarMovimientos={am}
-                eliminarMovimientos={dm}
               />
             }
           />
@@ -65,7 +43,7 @@ function App() {
           <Route path="/presupuestos/:presuId" element={<VentaProductos />} />
           <Route
             path="/user"
-            element={<User modUsuarios={mu} delUsuarios={du} />}
+            element={<User  />}
           />
           <Route
             path="/products"

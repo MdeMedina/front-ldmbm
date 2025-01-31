@@ -18,8 +18,6 @@ import { PassModal } from "../modal/passModal";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 function Navg({  }) {
-  let obH = JSON.parse(localStorage.getItem("permissions")).obviarIngreso;
-  let am = JSON.parse(localStorage.getItem("permissions")).aprobarMovimientos;
   const navigate = useNavigate();
   const [apertura, setApertura] = useState();
   const [moves, setMoves] = useState([]);
@@ -135,43 +133,6 @@ function Navg({  }) {
 
 
 
-
-
-  const displayNotificationMove = (n) => {
-    if (am) {
-      if (filterMove.length > 0 && filterMove.length > 1) {
-        return (
-          <div onClick={() => navigate("/clientes")} className="af" key={1}>
-            {`Hay ${filterMove.length} movimientos por aprobar`}
-          </div>
-        );
-      } else if (filterMove.length === 1) {
-        return (
-          <div onClick={() => navigate("/clientes")} className="af" key={1}>
-            {`Hay 1 movimiento por aprobar`}
-          </div>
-        );
-      } else {
-        return <div>No hay movimientos por aprobar</div>;
-      }
-    }
-  };
-
-  const displayNotes = () => {
-    if (!note[0]) {
-      if (am) {
-        return false;
-      } else {
-        return <div>No hay notificaciones nuevas</div>;
-      }
-    } else {
-      return (
-        <div onClick={() => navigate("/clientes")} className="af" key={1}>
-          {`Tienes movimientos ya aprobados`}
-        </div>
-      );
-    }
-  };
 
   return (
     <div className="ndG">

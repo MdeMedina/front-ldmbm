@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Clientes from './clientes';
 import { Cliente } from './clientes/cliente';
 
-function InApp ({ vm, am, dm, mu, du}) {
+function InApp () {
   return (
     <>
     <Router>
@@ -25,14 +25,11 @@ function InApp ({ vm, am, dm, mu, du}) {
         </Route>
         <Route path="/clientes">
           <Clientes
-            verMovimientos={vm}
-            aprobarMovimientos={am}
-            eliminarMovimientos={dm}
           />
         </Route>
         <Route path="/clientes/:clienteId" element={<Cliente />} />
         <Route path="/user">
-          <User modUsuarios={mu} delUsuarios={du} />
+          <User/>
         </Route>
         <Route path="/">
           <Home />

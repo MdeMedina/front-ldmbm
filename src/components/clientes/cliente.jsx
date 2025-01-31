@@ -15,7 +15,6 @@ import ActProductModal from '../sub-components/modal/ActProductModal';
 export const Cliente = () => {
 const {clienteId} = useParams();
 console.log(clienteId)
-const ca = JSON.parse(localStorage.getItem('permissions')).configurarCuentas
 const key = localStorage.getItem('key')
 if (!key) {
   window.location.href=`${frontUrl()}/login`;
@@ -38,15 +37,13 @@ const [meEncuentro, setMeEncuentro] = useState(1)
 const [deletingAccount, setDeletingAccount] = useState()
 const [vPage, setVPage] = useState(10)
 useEffect(() => {
-  if (!ca) {
-    navigate('/')
-  }
+
 
   if (!key) {
     navigate("/login")
   }
 
-}, [ca, key, navigate])
+}, [key, navigate])
 
 useEffect(() => {
   getClient()

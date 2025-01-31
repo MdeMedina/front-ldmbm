@@ -4,18 +4,11 @@ import { Link } from "react-router-dom";
 import ModalComponent from "../modal/iframeModal";
 
 function Sidebar(props) {
-  let permissions = JSON.parse(localStorage.getItem("permissions"));
-  let cp = permissions.consultarPrecios;
-  let vm = permissions.verMovimientos;
-  let cu = permissions.crearUsuarios;
-  let sh = permissions.horasIngreso;
-  let ca = permissions.configurarCuentas;
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
   const createFunction = () => {
-    if (cu) {
       return (
         <li className="nav-link">
           <Link to="/user">
@@ -26,11 +19,10 @@ function Sidebar(props) {
           </Link>
         </li>
       );
-    }
   };
 
   const listaFunction = () => {
-    if (cp) {
+
       return (
         <li className="nav-link">
           <Link to="/clientes">
@@ -41,10 +33,9 @@ function Sidebar(props) {
           </Link>
         </li>
       );
-    }
+    
   };
   const movesFunction = () => {
-    if (vm) {
       return (
         <li className="nav-link">
           <Link to="/presupuestos">
@@ -55,37 +46,11 @@ function Sidebar(props) {
           </Link>
         </li>
       );
-    }
-  };
-  const hourFunction = () => {
-    if (sh) {
-      return (
-        <li className="nav-link">
-          <Link to="/update">
-            <div className="icon">
-              <box-icon name="timer" size="27px"></box-icon>
-            </div>
-            <span className="text nav-text">Horarios</span>
-          </Link>
-        </li>
-      );
-    }
+
   };
 
-  const accountFunction = () => {
-    if (ca) {
-      return (
-        <li className="nav-link">
-          <Link to="/accountConfig">
-            <div className="icon">
-              <box-icon name="money"></box-icon>
-            </div>
-            <span className="text nav-text">Configuracion de cuentas</span>
-          </Link>
-        </li>
-      );
-    }
-  };
+
+
   return (
     <>
       <nav className="sidebar" id="sidebar">
