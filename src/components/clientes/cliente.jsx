@@ -293,7 +293,7 @@ const getClient = async () => {
   }
 }
 
-const editarCliente = async (nombre, RUT, correo, direccion, contacto, visita, observacion ) => {
+const editarCliente = async (nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo ) => {
   console.log("entre en editar cliente");
   
   let obj = {
@@ -304,7 +304,7 @@ const editarCliente = async (nombre, RUT, correo, direccion, contacto, visita, o
     direccion, 
     contacto, 
     visita,
-    observacion
+    observacion, giro, tipo
   };
   
   let error = document.getElementById("error");
@@ -395,9 +395,9 @@ const eliminarCliente = () => {
     }
 
 
-    const settingMounts = (nombre, RUT, correo, direccion, contacto, visita, observacion) => {
+    const settingMounts = (nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo) => {
       console.log("Entre en settingmounts")
-      editarCliente(nombre, RUT, correo, direccion, contacto, visita, observacion)
+      editarCliente(nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo)
     }
 
     const removeClient = async (id) => {
@@ -461,6 +461,10 @@ const eliminarCliente = () => {
       <h6>RUT:</h6> 
       <div className="f-data">{cliente.RUT}</div>
     </div>
+    {cliente.tipo == "Empresa" ?<div className="col-xs-4 col-sm-4 mb-2 ">
+      <h6>giro:</h6> 
+      <div className="f-data">{cliente.giro}</div>
+    </div> : null}
     <div className="col-xs-8 col-sm-4 mb-2 ">
       <h6>Contacto:</h6> 
       <div className="f-data">{cliente.contacto}</div>

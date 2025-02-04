@@ -3,11 +3,13 @@ import { Accordion } from "react-bootstrap";
 import { backendUrl } from "../../lib/data/server";
 import Swal from "sweetalert2";
 import EditUProductModal from "../sub-components/modal/editUProduct";
+import CreateProductModal from "../sub-components/modal/createUseProduct";
 
 const Products = () => {
     const [buscar, setBuscar] = useState("");
     const [productos, setProductos] = useState([]);
     const [product, setProduct] = useState();
+    const [cP, setCP] = useState(false);
     const [searching, setSearching] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalDocs, setTotalDocs] = useState(0);
@@ -40,6 +42,55 @@ const eliminarProducto = (id) => {
     }
   })
 }
+
+const settingCreateProduct = async (params) => {
+    createUproduct(params)
+}
+
+
+    const createUproduct = async (params) => {
+      const obj = {
+        nombre: params.nombre,
+        precio: params.precio,
+        nota: params.notas
+      }
+      
+      return fetch(`${backendUrl()}/uproducts/add`, {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(obj),
+            })
+              .then(r => r.json()).then(r => {
+                console.log("Producto Creado: ",r)
+                if (r.status === 201) {
+                  setProductos(prevList => [...prevList, r.product])
+                  Swal.fire({
+                    icon: "success",
+                    title: "Producto Creado con exito",
+                    showConfirmButton: false,
+                    timer: 1100
+                  })
+                } else if (r.status === 403){
+                  Swal.fire({
+                    icon: "error",
+                    title: r.text,
+                    showConfirmButton: false,
+                    timer: 1100
+                  })
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Algo extraño ha ocurrido",
+                    text: "Comuniquese con el administrador",
+                    showConfirmButton: false,
+                    timer: 1100
+                  })
+                }
+              });
+    }
 
 
 const removeProduct = async (id) => {
@@ -163,11 +214,23 @@ const settingActProduct = (nombre, notas, precio, _id) => {
     onHide={() => setProduct(null)}
     settingMounts={settingActProduct}
     ></EditUProductModal>
+    <CreateProductModal 
+                            show={cP}
+                            onHide={() => setCP(false)}
+                            settingmounts={settingCreateProduct}
+                            pdf={false}
+      />
   <div className="d-flex justify-content-center">
   <div className="container-fluid row  d-flex justify-content-center">
 <div className="col-12 bg-light t-mod mt-3 p-4 row">
- <div className="col-12 align-self-start d-flex justify-content-start mt-2 mb-2 row">
-    <h1>Productos Manuales</h1>
+  
+ <div className="col-12 d-flex justify-content-center mt-2 mb-2 row">
+
+    <h2 className="row d-flex justify-content-center"><div className="col-sm-8 d-flex justify-content-center ">Productos Manuales</div> <div className="col-sm-4 ">
+              <div className='toyox btn-cliente' onClick={() => setCP(true)} >
+                <box-icon name='add-to-queue' type='solid' color='#ffffff' size="18px" ></box-icon> Producto manual
+                </div>
+              </div></h2>
   <div className="col-4 d-flex justify-content-center align-items-center">
   <label htmlFor="" className='lbl-cli'>Buscar Producto Manual</label>
   </div>

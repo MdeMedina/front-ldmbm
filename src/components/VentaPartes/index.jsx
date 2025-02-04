@@ -10,6 +10,7 @@ import { backendUrl, frontUrl } from '../../lib/data/server';
 import MultiAttachmentInput from './multi';
 import SearchModal from '../sub-components/modal/SearchModal';
 import CreateProductModal from '../sub-components/modal/createUseProduct';
+import EModal from '../sub-components/modal/E-modal'
 import { useParams } from 'react-router-dom';
 
 
@@ -60,7 +61,7 @@ const {presuId} = useParams();
     const [loading, setLoading] = useState(false);
     const [pdfName, setPdfName] = useState('')
     const [logs, setLogs] = useState([]);
-    
+    const [egresoShow, setEgresoShow] = React.useState(false);
     const [Corr, setCorr] = useState(0);
     const [newCorr, setNewCorr] = useState(0);
     const [totalProducts, setTotalProducts] = useState(0);
@@ -814,7 +815,6 @@ useEffect(() => {
    const insertClients = () => {
     let arr = []
     dataClient.map((c) => {
-
       arr.push({value: c.Nombre, label: c.Nombre})
     })
     setClientes(arr)
@@ -1352,6 +1352,81 @@ const MySwal = withReactContent(Swal)
       }
     }, [clientes])
 
+    
+const settingMounts = (nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo) => {
+  addCliente(nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo)
+}
+
+const addCliente = async (nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo ) => {
+  let obj = {
+    nombre, 
+    RUT, 
+    correo, 
+    direccion, 
+    contacto, 
+    visita,
+    observacion,
+    giro,
+    tipo
+  };
+  
+  let error = document.getElementById("error");
+  if (!nombre) {
+
+    if (error.classList.contains("desaparecer")) {
+      error.classList.remove("desaparecer");
+    }
+  }   else if (!correo) {
+
+    if (error.classList.contains("desaparecer")) {
+      error.classList.remove("desaparecer");
+    }
+  } else {
+    if (!error.classList.contains("desaparecer")) {
+      error.classList.add("desaparecer");
+    }
+
+    return fetch(`${backendUrl()}/clients/add`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    })
+      .then(r => r.json()).then(r => {
+        console.log("Cliente creado: ",r)
+        if (r.status === 201) {
+          setSelectedClient({value: r.client.nombre, label: r.client.nombre})
+          setCliente(r.client)
+          Swal.fire({
+            icon: "success",
+            title: "Cliente Creado con exito",
+            showConfirmButton: false,
+            timer: 1100
+          })
+        } else if (r.status === 403){
+          Swal.fire({
+            icon: "error",
+            title: r.text,
+            showConfirmButton: false,
+            timer: 1100
+          })
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Algo extraño ha ocurrido",
+            text: "Comuniquese con el administrador",
+            showConfirmButton: false,
+            timer: 1100
+          })
+        }
+      });
+  }
+};
+
+
+
   return (<>
         <SearchModal 
                       show={search}
@@ -1368,11 +1443,20 @@ const MySwal = withReactContent(Swal)
                             cliente={cliente}
                             product={product.data}
                             url={urlPhotos}
+                            pdf={true}
       />
+        <EModal
+                      show={egresoShow}
+                      onHide={() => setEgresoShow(false)}
+                      settingMounts={settingMounts}
+                    />
 
   <div className="d-flex justify-content-center row mt-3 ">
     <div className="row bg-light col-11 py-4">
-        <div className="col-12 d-flex justify-content-center row mb-3 mx-0">
+    <div className="col-12 d-flex justify-content-center row mb-2 mx-0">
+        <div className="toyox btn-cliente col-xs-11 col-md-3 mb-2" onClick={() => setEgresoShow(true)}>Crear cliente</div>
+        </div>
+        <div className="col-12 d-flex justify-content-center row mb-2 mx-0">
         <div className="col-sm-2 mx-1 d-flex align-items-center justify-content-center">Buscar Cliente:</div>
  <div className="col-sm-9 d-flex align-items-center justify-content-center"> <Select options={clientes} components={components} menuIsOpen={menu2} value={selectedClient} isClearable={true} onChange={(e) => {
   console.log(e)
@@ -1394,8 +1478,9 @@ const MySwal = withReactContent(Swal)
         }} className="selectpd px-2"  id='clientela'/>
         </div>
         </div>
+
         {
-          selectedClient ? <div className='row col-12'>
+          selectedClient ? <div className='row col-12 d-flex justify-content-center mb-2 mx-0'>
             <div className="col-6 d-flex justify-content-center">
               <button className='btn btn-success ' onClick={() => setSearch(true)}>
                 <box-icon name='search-alt-2' color='#ffffff' size="18px"></box-icon>  Buscar producto

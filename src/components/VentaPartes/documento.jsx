@@ -231,7 +231,7 @@ rowOutsideBox: {
           <View style={styles.row}>
             
         <Text style={{ width: '25%', fontWeight: 'bold' }}>RUT</Text><Text style={{ width: '25%' }}>{cliente ? cliente.RUT : false}</Text>
-        <Text style={{ width: '25%' }}></Text><Text style={{ width: '25%' }}></Text>
+        {cliente.tipo == "Empresa" ? <><Text style={{ width: '25%' }}>Giro</Text><Text style={{ width: '25%' }}>{cliente ? cliente.giro : false}</Text></> : <><Text style={{ width: '25%' }}></Text><Text style={{ width: '25%' }}></Text></>}
             </View>
             <View style={styles.row}>
         <Text style={{ width: '25%', fontWeight: 'bold' }}>Vendedor</Text><Text style={{ width: '25%' }}>{vendedor.nombre}</Text>

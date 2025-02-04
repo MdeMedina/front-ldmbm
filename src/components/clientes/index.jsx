@@ -64,7 +64,7 @@ const getClients = async (page) => {
 
 
 
-const addCliente = async (nombre, RUT, correo, direccion, contacto, visita, observacion ) => {
+const addCliente = async (nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo) => {
   let obj = {
     nombre, 
     RUT, 
@@ -72,7 +72,9 @@ const addCliente = async (nombre, RUT, correo, direccion, contacto, visita, obse
     direccion, 
     contacto, 
     visita,
-    observacion
+    observacion,
+    giro,
+    tipo
   };
   
   let error = document.getElementById("error");
@@ -143,8 +145,8 @@ getClients(Buscar, currentPage)
 
 
 
-const settingMounts = (nombre, RUT, correo, direccion, contacto, visita, observacion) => {
-  addCliente(nombre, RUT, correo, direccion, contacto, visita, observacion)
+const settingMounts = (nombre, RUT, correo, direccion, contacto, visita, observacion, giro ,tipo) => {
+  addCliente(nombre, RUT, correo, direccion, contacto, visita, observacion, giro, tipo)
 }
 
 

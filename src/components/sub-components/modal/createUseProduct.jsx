@@ -46,15 +46,17 @@ function CreateProductModal(props) {
         <label>Precio: </label>
         <input type="text" onChange={(e) => setPrecio(e.target.value)} className="form-control" />
         <br />
-        <label>Cantidad: </label>
-        <input type="text" onChange={(e) => setCantidad(e.target.value)} className="form-control" />
-        <br />
-        <input type="checkbox" onChange={(e) => setSave(e.target.value)} className='form-check-input mx-2' id='check-save'/>
-        <label for="check-save">Guardar Producto </label>
-        <br />
-        <br />
+
+        { 
+          props.pdf ?  <><label>Cantidad: </label>
+          <input type="text" onChange={(e) => setCantidad(e.target.value)} className="form-control" />
+          <br /><input type="checkbox" onChange={(e) => setSave(e.target.value)} className='form-check-input mx-2' id='check-save'/>
+          <label for="check-save">Guardar Producto </label> <br />
+          <br /></> : false
+        }
+
         {
-            save ?         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            save || !props.pdf ?         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Notas:</Form.Label>
             <Form.Control id="e-concepto" as="textarea" rows={3} onChange={(e) => {
                 setNotas(e.target.value)
